@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type":"modeule",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "migrate": "tsx src/db/migrate.ts",
