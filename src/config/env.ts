@@ -11,6 +11,7 @@ const envSchema = z.object({
   POSTGRES_PASSWORD:z.string(),
   POSTGRES_DB:z.string(),
   PAYMENT_SUCCESS_RATE: z.coerce.number().min(0).max(1).default(0.8),
+    LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).optional(),
 });
 
 const parsed = envSchema.safeParse(process.env);

@@ -3,7 +3,7 @@ import { AppError } from '../utils/AppError';
 
 export function errorMiddleware(
   err: Error & { type?: string },
-  _req: Request,
+  req: Request,
   res: Response,
   _next: NextFunction,
 ) {
@@ -16,6 +16,7 @@ export function errorMiddleware(
     return res.status(400).json({ error: 'Malformed JSON body' });
   }
 
-  console.error('Unexpected error:', err);
+  // Sirf unexpected errors stack trace ke saath log hote hain
+  req.log.error({ err }, 'unhandled error');
   return res.status(500).json({ error: 'Internal server error' });
 }

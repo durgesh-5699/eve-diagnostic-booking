@@ -1,10 +1,11 @@
 import { pool } from './pool';
 import { runMigrations } from './migrator';
+import { logger } from '../utils/logger';
 
-runMigrations(pool, console.log)
+runMigrations(pool, (message) => logger.info(message))
   .then(() => pool.end())
   .catch(async (err) => {
-    console.error(err);
+    logger.error({ err }, 'migration failed');
     await pool.end();
     process.exit(1);
   });

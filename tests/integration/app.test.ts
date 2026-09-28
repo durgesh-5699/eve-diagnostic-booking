@@ -23,4 +23,12 @@ describe('app-level behaviour', () => {
     expect(res.status).toBe(400);
     expect(res.body).toEqual({ error: 'Malformed JSON body' });
   });
+
+    it('sets an x-request-id header and echoes a client-supplied one', async () => {
+    const generated = await request(app).get('/health');
+    expect(generated.headers['x-request-id']).toEqual(expect.any(String));
+
+    const echoed = await request(app).get('/health').set('x-request-id', 'trace-123');
+    expect(echoed.headers['x-request-id']).toBe('trace-123');
+  });
 });

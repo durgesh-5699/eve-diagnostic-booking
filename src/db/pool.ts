@@ -1,5 +1,6 @@
 import { Pool } from 'pg';
-import { env } from '../config/env.ts';
+import { env } from '../config/env';
+import { logger } from '../utils/logger';
 
 export const pool = new Pool({
   connectionString: env.DATABASE_URL,
@@ -9,6 +10,6 @@ export const pool = new Pool({
 });
 
 pool.on('error', (err) => {
-  console.error('Unexpected error on idle Postgres client', err);
+  logger.fatal({ err }, 'unexpected error on idle postgres client');
   process.exit(1);
 });
