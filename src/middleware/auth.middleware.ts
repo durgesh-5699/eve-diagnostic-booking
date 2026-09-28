@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
-import  { verifyToken, JwtPayload } from '../utils/jwt';
+import { verifyToken } from '../utils/jwt';
+import type { JwtPayload } from '../utils/jwt';
 import { AppError } from '../utils/AppError';
-
 export interface AuthenticatedRequest extends Request {
   user?: JwtPayload;
 }
@@ -18,7 +18,8 @@ export function requireAuth(req: AuthenticatedRequest, res: Response, next: Next
   try {
     req.user = verifyToken(token);
     next();
-  } catch {
+  } catch(err){
+    console.error('JWT verify failed:', (err as Error).message);
     next(new AppError(401, 'Invalid or expired token'));
   }
 }
