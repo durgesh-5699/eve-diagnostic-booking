@@ -10,7 +10,8 @@
   "test": "pnpm test:unit && pnpm test:integration",
   "test:unit": "vitest run",
   "test:integration": "vitest run --config vitest.integration.config.ts",
-  "test:watch": "vitest"
+  "test:watch": "vitest",
+  "start": "tsx src/server.ts"
 },
   "keywords": [],
   "author": "",
