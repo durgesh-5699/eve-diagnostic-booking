@@ -17,6 +17,10 @@ export function createApp() {
   app.use('/bookings', bookingsRoutes);
   app.use('/payments', paymentsRoutes);
 
+  app.use((_req, res) => {
+    res.status(404).json({ error: 'Route not found' });
+  });
+
   app.use(errorMiddleware);
 
   return app;
