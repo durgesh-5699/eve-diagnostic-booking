@@ -10,6 +10,7 @@ const envSchema = z.object({
   POSTGRES_USER:z.string(),
   POSTGRES_PASSWORD:z.string(),
   POSTGRES_DB:z.string(),
+  PAYMENT_SUCCESS_RATE: z.coerce.number().min(0).max(1).default(0.8),
 });
 
 const parsed = envSchema.safeParse(process.env);

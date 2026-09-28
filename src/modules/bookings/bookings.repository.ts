@@ -1,4 +1,5 @@
 import { pool } from '../../db/pool';
+import type { Db } from '../../db/transaction';
 
 export type BookingStatus = 'PENDING' | 'CONFIRMED' | 'FAILED' | 'CANCELLED';
 
@@ -43,11 +44,20 @@ export async function findBookingsByUserId(userId: string): Promise<BookingRow[]
   return result.rows;
 }
 
+export async function findBookingByIdForUpdate(id: string, db: Db): Promise<BookingRow | null> {
+  const result = await db.query<BookingRow>(
+    'SELECT * FROM bookings WHERE id = $1 FOR UPDATE',
+    [id],
+  );
+  return result.rows[0] ?? null;
+}
+
 export async function updateBookingStatus(
   id: string,
   status: BookingStatus,
+  db: Db = pool,
 ): Promise<BookingRow | null> {
-  const result = await pool.query<BookingRow>(
+  const result = await db.query<BookingRow>(
     `UPDATE bookings SET status = $2, updated_at = now() WHERE id = $1 RETURNING *`,
     [id, status],
   );

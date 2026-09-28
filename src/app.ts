@@ -3,6 +3,7 @@ import authRoutes from './modules/auth/auth.routes';
 import centresRoutes from './modules/centres/centres.routes';
 import bookingsRoutes from './modules/bookings/bookings.routes';
 import { errorMiddleware } from './middleware/error.middleware';
+import paymentsRoutes from './modules/payments/payments.routes';
 
 export function createApp() {
   const app = express();
@@ -14,6 +15,7 @@ export function createApp() {
   app.use('/auth', authRoutes);
   app.use('/centres', centresRoutes);
   app.use('/bookings', bookingsRoutes);
+  app.use('/payments', paymentsRoutes);
 
   app.use(errorMiddleware);
 
