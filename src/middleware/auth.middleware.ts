@@ -18,8 +18,7 @@ export function requireAuth(req: AuthenticatedRequest, res: Response, next: Next
   try {
     req.user = verifyToken(token);
     next();
-  } catch(err){
-    console.error('JWT verify failed:', (err as Error).message);
-    next(new AppError(401, 'Invalid or expired token'));
+    } catch {
+    return next(new AppError(401, 'Invalid or expired token'));
   }
 }
